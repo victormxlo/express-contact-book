@@ -1,6 +1,6 @@
 exports.global = (req, res, next) => {
-    const date = Date(Date.now());
-    console.log('Middleware checked: ' + date.toString());
+    res.locals.errors = req.flash('errors');
+    res.locals.success = req.flash('success');
     next();
 };
 
