@@ -17,7 +17,7 @@ exports.register = async (req, res) => {
             return;
         };
 
-        req.flash('success', 'Successfully registered contact');
+        req.flash('success', 'Successfully registered contact.');
         req.session.save(() => res.redirect(`/contact/index/${contact.contact._id}`));
         return;
     } catch (e) {
@@ -39,4 +39,29 @@ exports.editIndex = async (req, res) => {
     };
 
     res.render('contact.ejs', { contact });
+};
+
+exports.edit = async (req, res) => {
+    try {
+        if (!req.params.id) {
+            console.log('There is no id.');
+            return res.render('error-page.ejs');
+        };
+
+        const contact = new Contact(req.body);
+        await contact.edit(req.params.id);
+
+        if (contact.errors.length > 0) {
+            req.flash('errors', contact.errors);
+            req.session.save(() => res.redirect('/contact/index'));
+            return;
+        };
+
+        req.flash('success', 'Contact updated successfully.');
+        req.session.save(() => res.redirect(`/contact/index/${contact.contact._id}`));
+        return;
+    } catch (e) {
+        console.log(e);
+        res.render('error-page.ejs');
+    };
 };
