@@ -1,31 +1,40 @@
-<%- include('includes/head'); %>
-<%- include('includes/nav'); %>
+<%- include('includes/head') %>
+<%- include('includes/nav') %>
 
 <div class="container">
-  <div class="row">
-    <div class="col-lg-2"></div>
+    <div class="row">
+        <div class="col-lg-2"></div>
 
-    <div class="col-lg-8 my-3">
-      <h1 class="text-center">Contact Book</h1>
-      <p class="text-center lead">Contact list</p>
+        <div class="col-lg-8 my-3">
+            <h1 class="text-center">Contact Book</h1>
+            <hr>
+            <p class="text-center lead">Contact list</p>
 
-      <%- include('includes/messages'); %>
+            <%- include('includes/messages') %>
 
-      <div class="responsive-table">
-        <table class="table my-3">
-          <tr>
-            <td>Tyler</td>
-            <td>Durden</td>
-            <td>7415785146</td>
-            <td>durden@mail.com</td>
-          </tr>
-        </table>
-      </div>
+            <% if(contacts.length > 0) { %>
+            <div class="responsive-table">
+                <table class="table my-3">
+                    <% contacts.forEach(contact => { %>
+                    <tr>
+                        <td><%= contact.firstName %></td>
+                        <td><%= contact.lastName %></td>
+                        <td><%= contact.email %></td>
+                        <td><%= contact.phone %></td>
+                        <td><a href="/contact/index/<%= contact._id %>">Edit</a></td>
+                        <td><a class="text-danger" href="/contact/delete/<%= contact._id %>">Delete</a></td>
+                    </tr>
+                    <% }); %>
+                </table>
+            </div>
+            <% } else { %>
+                <p class="text-center lead">There are not contacts in your contact book.</p>
+            <% } %>
 
+        </div>
+        
+        <div class="col-lg-2"></div>
     </div>
-
-    <div class="col-lg-2"></div>
-  </div>
 </div>
 
-<%- include('includes/footer'); %>
+<%- include('includes/footer') %>

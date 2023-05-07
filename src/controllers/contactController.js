@@ -65,3 +65,25 @@ exports.edit = async (req, res) => {
         res.render('error-page.ejs');
     };
 };
+
+exports.delete = async (req, res) => {
+    try {
+        if (!req.params.id) {
+            console.log('There is no id.');
+            return res.render('error-page.ejs');
+        };
+
+        const contact = await Contact.delete(req.params.id);
+        if (!contact) {
+            console.log('There is no contact with this id.')
+            return res.render('error-page.ejs');
+        };
+
+        req.flash('success', 'Contact deleted successfully.');
+        req.session.save(() => res.redirect('/contact/index'));
+        return;
+    } catch (e) {
+        console.log(e);
+        res.render('error-page.ejs');
+    }
+};

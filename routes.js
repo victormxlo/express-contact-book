@@ -18,5 +18,6 @@ route.get('/contact/index', middleware.loginRequired, contactController.index);
 route.post('/contact/register', middleware.loginRequired, contactController.register);
 route.get('/contact/index/:id', middleware.loginRequired, contactController.editIndex);
 route.post('/contact/edit/:id', middleware.loginRequired, contactController.edit);
+route.get('/contact/delete/:id', middleware.loginRequired, contactController.delete);
 
 module.exports = route;
